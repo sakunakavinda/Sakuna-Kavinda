@@ -17,7 +17,7 @@
 
         /* Animations */
         .animate-fade-in { animation: fadeIn 1s ease-in-out; }
-        .animate-slide-up { 
+        .animate-slide-up {
             animation: slideUp 1s ease-in-out forwards;
             opacity: 0;
         }
@@ -26,13 +26,13 @@
             to { opacity: 1; }
         }
         @keyframes slideUp {
-            from { 
-                transform: translateY(50px); 
-                opacity: 0; 
+            from {
+                transform: translateY(50px);
+                opacity: 0;
             }
-            to { 
-                transform: translateY(0); 
-                opacity: 1; 
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
 
@@ -93,7 +93,7 @@
 
         @media (min-width: 1024px) {
             #home-video {
-                src: url("media/larg.mp4");
+                src: url("media/large.mp4");
             }
         }
 
@@ -121,6 +121,8 @@
             border-radius: 9999px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
         }
         .glow-btn:hover {
             background: #1f1f1f;
@@ -186,8 +188,36 @@
             }
         }
 
-        
+
         @media (max-width: 768px){
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 1rem;
+            }
+
+            nav li {
+                margin: 0.5rem 0;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            #home-video {
+                display: none; /* Hide video on mobile by default */
+            }
+
+            #home {
+                background: url('media/poster.jpg') no-repeat center center;
+                background-size: cover;
+            }
+
             .album-videos-container {
                 flex-direction: column;
             }
@@ -201,14 +231,13 @@
                 align-self: center;
             }
         }
-
     </style>
 </head>
 <body class="bg-gray-100">
 
 <header class="bg-black text-white py-4 flex justify-between items-center shadow-md sticky top-0 z-10 bg-gradient-animation">
     <div class="logo text-xl font-bold ml-4 animate-fade-in">Sakuna Kavinda</div>
-    <nav class="mr-4">
+    <nav class="mr-4 md:block hidden">
         <ul class="flex space-x-4">
             <li><a href="#home" class="hover:text-gray-300">Home</a></li>
             <li><a href="#gigs" class="hover:text-gray-300">Gigs</a></li>
@@ -217,11 +246,24 @@
             <li><a href="#contact" class="hover:text-gray-300">Contact</a></li>
         </ul>
     </nav>
+    <button id="mobile-menu-button" class="md:hidden text-white mr-4 focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+    </button>
+    <div id="mobile-menu" class="hidden absolute top-16 right-0 bg-black w-full py-4 z-20">
+        <ul class="flex flex-col items-center space-y-4">
+            <li><a href="#home" class="hover:text-gray-300 block py-2">Home</a></li>
+            <li><a href="#gigs" class="hover:text-gray-300 block py-2">Gigs</a></li>
+            <li><a href="#albums" class="hover:text-gray-300 block py-2">Albums</a></li>
+            <li><a href="#youtube" class="hover:text-gray-300 block py-2">YouTube</a></li>
+            <li><a href="#contact" class="hover:text-gray-300 block py-2">Contact</a></li>
+        </ul>
+    </div>
 </header>
 
 <section id="home">
-    <video id="home-video" autoplay loop muted playsinline>
+    <video id="home-video" autoplay loop muted playsinline poster="media/poster.jpg">
         <source src="media/large.mp4" type="video/mp4">
+        <source src="media/large.webm" type="video/webm">
         Your browser does not support the video tag.
     </video>
     <div id="home-content" class = "animate-slide-up">
@@ -248,7 +290,7 @@
 </section>
 
 <section id="contact" class="py-20 px-4 text-center">
-    
+
     <div class="mt-8 flex justify-center">
         <section id="contact" class="py-20 px-4 text-center">
             <h2 class="text-2xl font-semibold mb-8 text-black animate-fade-in">Contact Me</h2>
@@ -267,59 +309,6 @@
 </footer>
 
 <script>
-    const albumVideos = [
-        { title: "New Album Video", url: "media/vd1.mp4" },
-        { title: "Second Album Video", url: "media/vd2.mp4" },
-        { title: "Second Album Video", url: "media/vd3.mp4" }
-    ];
-
-    function displayAlbumVideos() {
-        const container = document.getElementById("album-videos-carousel");
-        container.innerHTML = '';
-
-        albumVideos.forEach((video, index) => {
-            const videoDiv = document.createElement("div");
-            videoDiv.className = "video-carousel-item";
-            videoDiv.innerHTML = `
-                <video controls>
-                    <source src="${video.url}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            `;
-            container.appendChild(videoDiv);
-        });
-
-        const carouselItems = container.querySelectorAll('.video-carousel-item');
-
-
-        const prevButton = document.getElementById('carousel-prev');
-        const nextButton = document.getElementById('carousel-next');
-        let currentIndex = 0;
-        let visibleCount = albumVideos.length;
-
-        function updateVisibility() {
-            carouselItems.forEach((item, index) => {
-                item.style.display = 'block';
-            });
-
-            prevButton.style.display = 'none';
-            nextButton.style.display = 'none';
-        }
-
-        prevButton.addEventListener('click', () => {
-            currentIndex = Math.max(currentIndex - 1, 0);
-            updateVisibility();
-        });
-
-        nextButton.addEventListener('click', () => {
-            currentIndex = Math.min(currentIndex + 1, albumVideos.length - 1);
-            updateVisibility();
-        });
-
-        updateVisibility();
-    }
-
-
     const gigsData = [
         { date: "Saturday 8 pm - 11 pm", venue: "Kurunrgala", info: "@Ceylon Lagos" },
         { date: "Sunday 8 pm - 11 pm", venue: "Habarana", info: "@Curry and Rice" },
@@ -348,7 +337,7 @@
         youtubeVideos.forEach(video => {
             const div = document.createElement("div");
             div.className = "aspect-w-16 aspect-h-9 youtube-hover";
-            div.innerHTML = `<iframe src="${video.url}" frameborder="0" allowfullscreen class="w-full h-64"></iframe>`;
+            div.innerHTML = `<iframe loading="lazy" src="${video.url}" frameborder="0" allowfullscreen class="w-full h-64"></iframe>`;
             container.appendChild(div);
         });
     }
@@ -361,9 +350,19 @@
         window.open("https://m.me/tadashi.hamada.16940", "_blank");
     }
 
-    displayGigs();
-    displayYouTubeVideos();
+    document.addEventListener('DOMContentLoaded', () => {
+        displayGigs();
+        displayYouTubeVideos();
 
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
 </script>
 
 </body>

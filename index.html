@@ -69,6 +69,8 @@
             object-fit: cover;
             z-index: -1;
             filter: brightness(0.7);
+            /* Debugging border - can remove after verification */
+            border: 2px solid rgba(255, 0, 0, 0.3);
         }
         #home-content {
             position: relative;
@@ -93,7 +95,7 @@
 
         @media (min-width: 1024px) {
             #home-video {
-                src: url("Sakuna-Kavinda/media/large.mp4");
+                display: block; /* Ensure video is visible on desktop */
             }
         }
 
@@ -188,7 +190,6 @@
             }
         }
 
-
         @media (max-width: 768px){
             header {
                 flex-direction: column;
@@ -262,11 +263,11 @@
 
 <section id="home">
     <video id="home-video" autoplay loop muted playsinline poster="media/poster.jpg">
-        <source src="https://sakunakavinda.github.io/Sakuna-Kavinda/media/large.mp4" type="video/mp4">
+        <source src="media/large.mp4" type="video/mp4">
         <source src="media/large.webm" type="video/webm">
         Your browser does not support the video tag.
     </video>
-    <div id="home-content" class = "animate-slide-up">
+    <div id="home-content" class="animate-slide-up">
         <h1 class="text-4xl font-extrabold mb-4">Welcome to my Official Website</h1>
         <p class="text-lg mb-8">Hello, I'm Sakuna Kavinda, a passionate singer. Explore my latest gigs, albums, and YouTube videos!</p>
         <button onclick="window.location.href='#contact'" class="glow-btn">Contact Me</button>
@@ -290,7 +291,6 @@
 </section>
 
 <section id="contact" class="py-20 px-4 text-center">
-
     <div class="mt-8 flex justify-center">
         <section id="contact" class="py-20 px-4 text-center">
             <h2 class="text-2xl font-semibold mb-8 text-black animate-fade-in">Contact Me</h2>
@@ -312,7 +312,6 @@
     const gigsData = [
         { date: "Saturday 8 pm - 11 pm", venue: "Kurunrgala", info: "@Ceylon Lagos" },
         { date: "Sunday 8 pm - 11 pm", venue: "Habarana", info: "@Curry and Rice" },
-
     ];
 
     const youtubeVideos = [
@@ -354,9 +353,25 @@
         displayGigs();
         displayYouTubeVideos();
 
+        // Video error handling
+        const video = document.getElementById('home-video');
+        if (video) {
+            video.addEventListener('error', function() {
+                console.error('Video loading error:', video.error);
+                // Fallback to poster image if video fails
+                document.getElementById('home').style.backgroundImage = "url('media/poster.jpg')";
+                video.style.display = 'none';
+            });
+            
+            // For debugging - log video ready state
+            video.addEventListener('loadeddata', () => {
+                console.log('Video loaded successfully');
+            });
+        }
+
+        // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');

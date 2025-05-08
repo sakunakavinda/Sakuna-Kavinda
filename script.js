@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     title="${video.title}"
-                    loading="lazy"
                 ></iframe>
             `;
             container.appendChild(videoDiv);
@@ -82,46 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://m.me/tadashi.hamada.16940', '_blank');
     });
 
-    // Video handling for iOS
-    const video = document.getElementById('home-video');
-    if (video) {
-        // Check if iOS
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        
-        if (isIOS) {
-            // For iOS, we need to handle autoplay differently
-            video.setAttribute('playsinline', '');
-            video.setAttribute('muted', '');
-            
-            // Try to play immediately
-            video.play().catch(error => {
-                // If autoplay fails, show poster and set up touch handler
-                video.poster = 'media/poster.jpg';
-                
-                // When user interacts with page, try to play again
-                document.addEventListener('touchstart', function handleFirstTouch() {
-                    video.play().then(() => {
-                        // Success! Remove the poster
-                        video.poster = '';
-                    }).catch(e => {
-                        console.log('Video play failed:', e);
-                    });
-                    document.removeEventListener('touchstart', handleFirstTouch);
-                }, { once: true });
-            });
-        } else {
-            // For non-iOS devices, just try to play
-            video.play().catch(error => {
-                console.log('Autoplay prevented:', error);
-            });
-        }
-        
-        // Fallback for any errors
-        video.addEventListener('error', function() {
-            console.error('Video loading error');
-            video.style.display = 'none';
-        });
-    }
+
 
     // Initialize
     displayGigs();

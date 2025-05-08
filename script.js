@@ -81,15 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://m.me/tadashi.hamada.16940', '_blank');
     });
 
-    // Video error handling
-    // const video = document.getElementById('home-video');
-    // if (video) {
-    //     video.addEventListener('error', function() {
-    //         console.error('Video loading error');
-    //         document.getElementById('home').style.backgroundImage = "url('media/poster.jpg')";
-    //         video.style.display = 'none';
-    //     });
-    // }
+
 
     // Initialize
     displayGigs();

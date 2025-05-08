@@ -272,6 +272,18 @@ section h2::after {
 }
 
 /* Contact Section */
+#contact{
+    background-color: #e3e3e3;
+}
+
+#contactDiv{
+    background-color: #d1d5db;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10rem;
+}
+
+
 .contact-buttons {
     display: flex;
     justify-content: center;

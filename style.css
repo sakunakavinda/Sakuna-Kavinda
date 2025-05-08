@@ -108,6 +108,7 @@ header {
     filter: brightness(0.7);
 }
 
+
 #home-content {
     color: white;
     max-width: 800px;
@@ -329,11 +330,6 @@ footer {
         height: 100%;
     }
 
-
-    #home {
-        background: url('media/large.mp4') no-repeat center center;
-        background-size: cover;
-    }
 
     #home h1 {
         font-size: 1.75rem;

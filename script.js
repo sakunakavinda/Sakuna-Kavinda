@@ -82,14 +82,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Video error handling
-    const video = document.getElementById('home-video');
-    if (video) {
-        video.addEventListener('error', function() {
-            console.error('Video loading error');
-            document.getElementById('home').style.backgroundImage = "url('media/poster.jpg')";
-            video.style.display = 'none';
-        });
-    }
+    // const video = document.getElementById('home-video');
+    // if (video) {
+    //     video.addEventListener('error', function() {
+    //         console.error('Video loading error');
+    //         document.getElementById('home').style.backgroundImage = "url('media/poster.jpg')";
+    //         video.style.display = 'none';
+    //     });
+    // }
 
     // Initialize
     displayGigs();

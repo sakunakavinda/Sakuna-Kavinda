@@ -325,11 +325,13 @@ footer {
     }
 
     #home-video {
-        display: none;
+        /* Ensure video stays visible but add mobile-specific adjustments */
+        height: 100%;
     }
 
+
     #home {
-        background: url('media/large.mp4') no-repeat center center;
+        background: url('media/poster.jpg') no-repeat center center;
         background-size: cover;
     }
 

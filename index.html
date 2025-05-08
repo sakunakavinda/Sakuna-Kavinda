@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sakuna Kavinda - Singer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            margin: 0;
+        }
+        .hidden { display: none; }
+
+        /* Animations */
+        .animate-fade-in { animation: fadeIn 1s ease-in-out; }
+        .animate-slide-up { 
+            animation: slideUp 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+        }
+
+        .bg-gradient-animation {
+            background: linear-gradient(90deg, #000000, #222222, #000000);
+            background-size: 300% 300%;
+            animation: gradientAnimation 5s ease infinite;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Hero Section */
+        #home {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 4rem;
+            box-sizing: border-box;
+        }
+        #home-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+        #home-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            animation: slideUp 1s ease 0.3s forwards;
+        }
+
+        .youtube-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .youtube-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 5;
+        }
+
+        #youtube-videos iframe {
+            border-radius: 12px;
+        }
+
+        @media (min-width: 1024px) {
+            #home-video {
+                src: url("media/larg.mp4");
+            }
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 24px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #00ffa2;
+            transform: scale(1.2);
+        }
+
+        /* Button Effects */
+        .glow-btn {
+            background: black;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .glow-btn:hover {
+            background: #1f1f1f;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Section headings */
+        section h2 {
+            position: relative;
+        }
+        section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            margin: 8px auto 0;
+            background: #000;
+            animation: growLine 1s ease forwards;
+        }
+        @keyframes growLine {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+
+        /* Card hover */
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-button {
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #128C7E; /* Darker WhatsApp Green */
+        }
+
+        .messenger-button {
+            background-color: #0078FF; /* Messenger Blue */
+            color: white;
+        }
+
+        .messenger-button:hover {
+            background-color: #0056b3; /* Darker Messenger Blue */
+        }
+
+        @media (min-width: 768px) {
+            .video-carousel-item {
+                width: 50%;
+            }
+            .video-carousel-item:last-child {
+                margin-right: 0;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .video-carousel-item {
+                width: 33.33%;
+            }
+        }
+
+        
+        @media (max-width: 768px){
+            .album-videos-container {
+                flex-direction: column;
+            }
+            .video-carousel{
+                flex: 1;
+                margin-right: 0;
+            }
+            #albums-explore-button{
+                flex: 1;
+                margin-top: 1rem;
+                align-self: center;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-black text-white py-4 flex justify-between items-center shadow-md sticky top-0 z-10 bg-gradient-animation">
+    <div class="logo text-xl font-bold ml-4 animate-fade-in">Sakuna Kavinda</div>
+    <nav class="mr-4">
+        <ul class="flex space-x-4">
+            <li><a href="#home" class="hover:text-gray-300">Home</a></li>
+            <li><a href="#gigs" class="hover:text-gray-300">Gigs</a></li>
+            <li><a href="#albums" class="hover:text-gray-300">Albums</a></li>
+            <li><a href="#youtube" class="hover:text-gray-300">YouTube</a></li>
+            <li><a href="#contact" class="hover:text-gray-300">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="home">
+    <video id="home-video" autoplay loop muted playsinline>
+        <source src="media/large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="home-content" class = "animate-slide-up">
+        <h1 class="text-4xl font-extrabold mb-4">Welcome to my Official Website</h1>
+        <p class="text-lg mb-8">Hello, I'm Sakuna Kavinda, a passionate singer. Explore my latest gigs, albums, and YouTube videos!</p>
+        <button onclick="window.location.href='#contact'" class="glow-btn">Contact Me</button>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/sakunakavindaa/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@sakunakavindaa" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://web.facebook.com/tadashi.hamada.16940" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+</section>
+
+<section id="gigs" class="py-20 px-4 text-center">
+    <h2 class="text-2xl font-semibold mb-8 text-black animate-fade-in">Gigs</h2>
+    <div id="gigs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"></div>
+</section>
+
+<section id="youtube" class="py-20 px-4 text-center">
+    <h2 class="text-2xl font-semibold mb-8 text-black animate-fade-in">My Content</h2>
+    <div id="youtube-videos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"></div>
+    <button onclick="window.open('https://www.youtube.com/@sakuna_kavinda', '_blank')" class="glow-btn">Visit My Channel</button>
+</section>
+
+<section id="contact" class="py-20 px-4 text-center">
+    
+    <div class="mt-8 flex justify-center">
+        <section id="contact" class="py-20 px-4 text-center">
+            <h2 class="text-2xl font-semibold mb-8 text-black animate-fade-in">Contact Me</h2>
+            <p class="text-lg text-gray-700 mb-4">Email: sakunasy5@gmail.com</p>
+            <p class="text-lg text-gray-700">Phone: +9471 653 1817</p>
+            <div class="mt-8 flex justify-center">
+                <button onclick="openWhatsApp()" class="glow-btn whatsapp-button mr-4">WhatsApp</button>
+                <button onclick="openMessenger()" class="glow-btn messenger-button">Messenger</button>
+            </div>
+        </section>
+    </div>
+</section>
+
+<footer class="bg-gray-800 text-white py-4 text-center">
+    <p>© 2024 Sakuna Kavinda. All rights reserved.</p>
+</footer>
+
+<script>
+    const albumVideos = [
+        { title: "New Album Video", url: "media/vd1.mp4" },
+        { title: "Second Album Video", url: "media/vd2.mp4" },
+        { title: "Second Album Video", url: "media/vd3.mp4" }
+    ];
+
+    function displayAlbumVideos() {
+        const container = document.getElementById("album-videos-carousel");
+        container.innerHTML = '';
+
+        albumVideos.forEach((video, index) => {
+            const videoDiv = document.createElement("div");
+            videoDiv.className = "video-carousel-item";
+            videoDiv.innerHTML = `
+                <video controls>
+                    <source src="${video.url}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+            container.appendChild(videoDiv);
+        });
+
+        const carouselItems = container.querySelectorAll('.video-carousel-item');
+
+
+        const prevButton = document.getElementById('carousel-prev');
+        const nextButton = document.getElementById('carousel-next');
+        let currentIndex = 0;
+        let visibleCount = albumVideos.length;
+
+        function updateVisibility() {
+            carouselItems.forEach((item, index) => {
+                item.style.display = 'block';
+            });
+
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = Math.max(currentIndex - 1, 0);
+            updateVisibility();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = Math.min(currentIndex + 1, albumVideos.length - 1);
+            updateVisibility();
+        });
+
+        updateVisibility();
+    }
+
+
+    const gigsData = [
+        { date: "Saturday 8 pm - 11 pm", venue: "Kurunrgala", info: "@Ceylon Lagos" },
+        { date: "Sunday 8 pm - 11 pm", venue: "Habarana", info: "@Curry and Rice" },
+
+    ];
+
+    const youtubeVideos = [
+        { title: "Song Title 1", url: "https://www.youtube.com/embed/RuBe-gu-BKA" },
+        { title: "Song Title 2", url: "https://www.youtube.com/embed/mpjtFXyTbvA" },
+        { title: "Song Title 3", url: "https://www.youtube.com/embed/WvMa-qh5n30" },
+        { title: "Song Title 4", url: "https://www.youtube.com/embed/UEIw3S9H7-I" }
+    ];
+
+    function displayGigs() {
+        const gigsContainer = document.getElementById("gigs-container");
+        gigsData.forEach(gig => {
+            const div = document.createElement("div");
+            div.className = "bg-white p-6 rounded-lg shadow-md animate-fade-in card-hover";
+            div.innerHTML = `<h3 class="text-xl font-bold mb-2">${gig.info}</h3><p>${gig.date}</p><p>${gig.venue}</p>`;
+            gigsContainer.appendChild(div);
+        });
+    }
+
+    function displayYouTubeVideos() {
+        const container = document.getElementById("youtube-videos");
+        youtubeVideos.forEach(video => {
+            const div = document.createElement("div");
+            div.className = "aspect-w-16 aspect-h-9 youtube-hover";
+            div.innerHTML = `<iframe src="${video.url}" frameborder="0" allowfullscreen class="w-full h-64"></iframe>`;
+            container.appendChild(div);
+        });
+    }
+
+    function openWhatsApp() {
+        window.open("https://wa.me/+94716531817", "_blank");
+    }
+
+    function openMessenger() {
+        window.open("https://m.me/tadashi.hamada.16940", "_blank");
+    }
+
+    displayGigs();
+    displayYouTubeVideos();
+
+</script>
+
+</body>
+</html>

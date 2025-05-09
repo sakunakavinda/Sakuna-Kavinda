@@ -1,4 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    const video = document.getElementById('home-video');
+    if (video) {
+        // Create fallback image element
+        const fallbackImg = document.createElement('img');
+        fallbackImg.src = video.poster;
+        fallbackImg.className = 'video-fallback';
+        fallbackImg.alt = 'Background image';
+        video.parentNode.insertBefore(fallbackImg, video.nextSibling);
+        
+        // Check if video can play
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Video failed to play - show fallback image
+                video.style.display = 'none';
+                fallbackImg.style.display = 'block';
+            });
+        }
+        
+        // Handle when video ends (for the loop)
+        video.addEventListener('ended', function() {
+            video.currentTime = 0;
+            video.play();
+        });
+    }
+
+
     // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
 

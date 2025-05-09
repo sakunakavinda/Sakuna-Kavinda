@@ -65,11 +65,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display YouTube videos with animation attributes
     function displayYouTubeVideos() {
         const container = document.getElementById("youtube-videos");
+        const showMoreBtn = document.createElement('button');
+        showMoreBtn.id = 'show-more-btn';
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        showMoreBtn.className = 'show-more-btn';
+        
+        // Initially show only 2 videos
+        const initialVideosToShow = 2;
+        let showingAll = false;
+
         youtubeVideos.forEach((video, index) => {
             const videoDiv = document.createElement("div");
             videoDiv.className = "youtube-video";
             videoDiv.setAttribute('data-animate', 'slide-up');
             videoDiv.style.transitionDelay = `${index * 0.1}s`;
+            
+            // Hide videos beyond the initial count
+            if (index >= initialVideosToShow) {
+                videoDiv.style.display = 'none';
+            }
+            
             videoDiv.innerHTML = `
                 <iframe 
                     src="${video.url}" 
@@ -82,6 +97,34 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             container.appendChild(videoDiv);
         });
+
+        // Add show more button functionality
+        showMoreBtn.addEventListener('click', function() {
+            const allVideos = container.querySelectorAll('.youtube-video');
+            
+            if (showingAll) {
+                // Hide videos beyond initial count
+                allVideos.forEach((video, index) => {
+                    if (index >= initialVideosToShow) {
+                        video.style.display = 'none';
+                    }
+                });
+                showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            } else {
+                // Show all videos
+                allVideos.forEach(video => {
+                    video.style.display = 'block';
+                });
+                showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            }
+            
+            showingAll = !showingAll;
+        });
+
+        // Only add show more button if there are more videos than initial count
+        if (youtubeVideos.length > initialVideosToShow) {
+            container.parentNode.insertBefore(showMoreBtn, container.nextSibling);
+        }
     }
 
     // Initialize scroll animations

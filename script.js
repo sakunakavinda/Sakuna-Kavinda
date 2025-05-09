@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     title="${video.title}"
+                    loading="lazy"
                 ></iframe>
             `;
             container.appendChild(videoDiv);
@@ -60,12 +61,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close mobile menu when clicking on a link
-    const mobileLinks = document.querySelectorAll('.mobile-nav a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            mobileMenu.style.display = 'none';
+    // Smooth scroll function
+    function smoothScroll(target) {
+        const element = document.querySelector(target);
+        if (element) {
+            window.scrollTo({
+                top: element.offsetTop - 70, // Adjust for header height
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Add smooth scroll to all navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('href');
+            
+            // Close mobile menu if open
+            if (mobileMenu) {
+                mobileMenu.style.display = 'none';
+            }
+            
+            smoothScroll(target);
         });
+    });
+
+    // Add smooth scroll to contact button
+    document.querySelector('button[onclick*="#contact"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        smoothScroll('#contact');
     });
 
     // Button event listeners
@@ -80,8 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('messenger-btn').addEventListener('click', function() {
         window.open('https://m.me/tadashi.hamada.16940', '_blank');
     });
-
-
 
     // Initialize
     displayGigs();

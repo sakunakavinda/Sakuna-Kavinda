@@ -1,4 +1,15 @@
 /* Base Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+/* This ensures smooth scrolling works properly */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;

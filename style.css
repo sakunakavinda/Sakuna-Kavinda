@@ -267,7 +267,7 @@ section h2.animate-in::after {
     background-color: #ffffff;
     margin: 20px;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .contact-buttons {

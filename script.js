@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display YouTube videos with animation attributes
     function displayYouTubeVideos() {
         const container = document.getElementById("youtube-videos");
+        const section = document.getElementById("youtube");
         const showMoreBtn = document.createElement('button');
         showMoreBtn.id = 'show-more-btn';
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initially show only 2 videos
         const initialVideosToShow = 2;
         let showingAll = false;
-
+    
         youtubeVideos.forEach((video, index) => {
             const videoDiv = document.createElement("div");
             videoDiv.className = "youtube-video";
@@ -82,7 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Hide videos beyond the initial count
             if (index >= initialVideosToShow) {
-                videoDiv.style.display = 'none';
+                videoDiv.style.opacity = '0';
+                videoDiv.style.maxHeight = '0';
+                videoDiv.style.overflow = 'hidden';
+                videoDiv.style.margin = '0';
+                videoDiv.style.padding = '0';
             }
             
             videoDiv.innerHTML = `
@@ -97,30 +102,55 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             container.appendChild(videoDiv);
         });
-
+    
         // Add show more button functionality
         showMoreBtn.addEventListener('click', function() {
             const allVideos = container.querySelectorAll('.youtube-video');
             
             if (showingAll) {
-                // Hide videos beyond initial count
+                // Animate hiding videos
                 allVideos.forEach((video, index) => {
                     if (index >= initialVideosToShow) {
-                        video.style.display = 'none';
+                        video.style.opacity = '0';
+                        video.style.maxHeight = '0';
+                        video.style.margin = '0';
+                        video.style.padding = '0';
                     }
                 });
-                showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                
+                // Button animation
+                showMoreBtn.classList.add('btn-animate');
+                setTimeout(() => {
+                    showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                    showMoreBtn.classList.remove('btn-animate');
+                    
+                    // Scroll to section after animation
+                    setTimeout(() => {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 200);
+                }, 300);
             } else {
-                // Show all videos
-                allVideos.forEach(video => {
-                    video.style.display = 'block';
+                // Animate showing videos
+                allVideos.forEach((video, index) => {
+                    if (index >= initialVideosToShow) {
+                        video.style.opacity = '1';
+                        video.style.maxHeight = '500px';
+                        video.style.margin = '';
+                        video.style.padding = '';
+                    }
                 });
-                showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                
+                // Button animation
+                showMoreBtn.classList.add('btn-animate');
+                setTimeout(() => {
+                    showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                    showMoreBtn.classList.remove('btn-animate');
+                }, 300);
             }
             
             showingAll = !showingAll;
         });
-
+    
         // Only add show more button if there are more videos than initial count
         if (youtubeVideos.length > initialVideosToShow) {
             container.parentNode.insertBefore(showMoreBtn, container.nextSibling);

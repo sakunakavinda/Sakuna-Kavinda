@@ -1,21 +1,17 @@
 /* Base Styles */
-html {
-    scroll-behavior: smooth;
-}
-
-/* This ensures smooth scrolling works properly */
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-}
-
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
     background-color: #f3f4f6;
+}
+
+/* Smooth scrolling with reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }
 
 /* Header Styles */
@@ -119,7 +115,6 @@ header {
     filter: brightness(0.7);
 }
 
-
 #home-content {
     color: white;
     max-width: 800px;
@@ -132,11 +127,154 @@ header {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 #home p {
     font-size: 1.125rem;
     margin-bottom: 2rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Scroll Animation System */
+[data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+[data-animate="fade"] {
+    transform: none;
+}
+
+[data-animate="slide-up"] {
+    transform: translateY(30px);
+}
+
+[data-animate="slide-down"] {
+    transform: translateY(-30px);
+}
+
+[data-animate="slide-left"] {
+    transform: translateX(30px);
+}
+
+[data-animate="slide-right"] {
+    transform: translateX(-30px);
+}
+
+[data-animate].animate-in {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* Section Styles */
+section {
+    padding: 5rem 1rem;
+    text-align: center;
+}
+
+section h2 {
+    position: relative;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 4px;
+    background: black;
+    margin: 0.5rem auto 0;
+    transition: width 0.8s ease;
+}
+
+section h2.animate-in::after {
+    width: 80px;
+}
+
+/* Gigs Section */
+#gigs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gig-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.gig-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+}
+
+.gig-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* YouTube Section */
+#youtube-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+}
+
+.youtube-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.youtube-video:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.youtube-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#youtube-channel-btn {
+    margin-top: 2rem;
+}
+
+/* Contact Section */
+#contact {
+    background-color: #e3e3e3;
+}
+
+#contactDiv {
+    background-color: #ffffff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 /* Button Styles */
@@ -195,113 +333,6 @@ button:hover {
     transform: scale(1.2);
 }
 
-/* Sections */
-section {
-    padding: 5rem 1rem;
-    text-align: center;
-}
-
-section h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-section h2::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: black;
-    margin: 0.5rem auto 0;
-    animation: growLine 1s ease forwards;
-}
-
-/* Gigs Section */
-#gigs-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.gig-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.gig-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-}
-
-.gig-card h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-/* YouTube Section */
-#youtube-videos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto 2rem;
-}
-
-.youtube-video {
-    position: relative;
-    padding-bottom: 56.25%;
-    overflow: hidden;
-    border-radius: 0.75rem;
-    transition: all 0.3s ease;
-}
-
-.youtube-video:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-
-.youtube-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-#youtube-channel-btn {
-    margin-top: 2rem;
-}
-
-/* Contact Section */
-#contact{
-    background-color: #e3e3e3;
-}
-
-#contactDiv{
-    background-color: #ffffff;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 5px;
-}
-
-
-.contact-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
 /* Footer */
 footer {
     background-color: #1f2937;
@@ -327,11 +358,6 @@ footer {
     }
 }
 
-@keyframes growLine {
-    from { width: 0; }
-    to { width: 80px; }
-}
-
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -349,10 +375,8 @@ footer {
     }
 
     #home-video {
-        /* Ensure video stays visible but add mobile-specific adjustments */
         height: 100%;
     }
-
 
     #home h1 {
         font-size: 1.75rem;
@@ -366,5 +390,16 @@ footer {
     .contact-buttons button {
         width: 100%;
         max-width: 200px;
+    }
+    
+    /* Adjust animation distances for mobile */
+    [data-animate="slide-up"], 
+    [data-animate="slide-down"] {
+        transform: translateY(20px);
+    }
+    
+    [data-animate="slide-left"],
+    [data-animate="slide-right"] {
+        transform: translateX(20px);
     }
 }

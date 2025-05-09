@@ -16,12 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         { title: "Song Title 4", url: "https://www.youtube.com/embed/UEIw3S9H7-I" }
     ];
 
-    // Display gigs
+    // Display gigs with animation attributes
     function displayGigs() {
         const gigsContainer = document.getElementById("gigs-container");
-        gigsData.forEach(gig => {
+        gigsData.forEach((gig, index) => {
             const gigCard = document.createElement("div");
             gigCard.className = "gig-card";
+            gigCard.setAttribute('data-animate', 'slide-up');
+            gigCard.style.transitionDelay = `${index * 0.1}s`;
             gigCard.innerHTML = `
                 <h3>${gig.info}</h3>
                 <p>${gig.date}</p>
@@ -31,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Display YouTube videos
+    // Display YouTube videos with animation attributes
     function displayYouTubeVideos() {
         const container = document.getElementById("youtube-videos");
-        youtubeVideos.forEach(video => {
+        youtubeVideos.forEach((video, index) => {
             const videoDiv = document.createElement("div");
             videoDiv.className = "youtube-video";
+            videoDiv.setAttribute('data-animate', 'slide-up');
+            videoDiv.style.transitionDelay = `${index * 0.1}s`;
             videoDiv.innerHTML = `
                 <iframe 
                     src="${video.url}" 
@@ -48,6 +52,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 ></iframe>
             `;
             container.appendChild(videoDiv);
+        });
+    }
+
+    // Initialize scroll animations
+    function initScrollAnimations() {
+        const animateOnScroll = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate section heading
+                    const heading = entry.target.querySelector('h2');
+                    if (heading && !heading.classList.contains('animate-in')) {
+                        heading.classList.add('animate-in');
+                    }
+                    
+                    // Animate all elements with data-animate attribute
+                    const animatables = entry.target.querySelectorAll('[data-animate]');
+                    animatables.forEach(el => {
+                        if (!el.classList.contains('animate-in')) {
+                            el.classList.add('animate-in');
+                        }
+                    });
+                } else {
+                    // Reset animations when element leaves view
+                    const heading = entry.target.querySelector('h2');
+                    if (heading) heading.classList.remove('animate-in');
+                    
+                    const animatables = entry.target.querySelectorAll('[data-animate]');
+                    animatables.forEach(el => {
+                        el.classList.remove('animate-in');
+                    });
+                }
+            });
+        };
+
+        // Set up intersection observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+            
+            // Observe individual animated elements within sections
+            section.querySelectorAll('[data-animate]').forEach(el => {
+                observer.observe(el);
+            });
         });
     }
 
@@ -66,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const element = document.querySelector(target);
         if (element) {
             window.scrollTo({
-                top: element.offsetTop - 70, // Adjust for header height
+                top: element.offsetTop - 70,
                 behavior: 'smooth'
             });
         }
@@ -78,19 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const target = this.getAttribute('href');
             
-            // Close mobile menu if open
             if (mobileMenu) {
                 mobileMenu.style.display = 'none';
             }
             
             smoothScroll(target);
         });
-    });
-
-    // Add smooth scroll to contact button
-    document.querySelector('button[onclick*="#contact"]').addEventListener('click', function(e) {
-        e.preventDefault();
-        smoothScroll('#contact');
     });
 
     // Button event listeners
@@ -106,7 +153,16 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://m.me/tadashi.hamada.16940', '_blank');
     });
 
-    // Initialize
+    // Initialize everything
     displayGigs();
     displayYouTubeVideos();
+    initScrollAnimations();
+
+    // Animate home content after a slight delay
+    setTimeout(() => {
+        const homeContent = document.getElementById('home-content');
+        if (homeContent) {
+            homeContent.style.animation = 'slideUp 1s ease 0.3s forwards';
+        }
+    }, 300);
 });
